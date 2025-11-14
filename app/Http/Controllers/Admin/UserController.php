@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -71,7 +72,7 @@ class UserController extends Controller
         }
 
         // Evitar que te quites a ti mismo el rol admin (opcional pero recomendable)
-        if (auth()->id() !== $user->id) {
+        if (Auth::id() !== $user->id) {
             $user->is_admin = $request->boolean('is_admin');
         }
 
@@ -85,7 +86,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         // Evitar que te borres a ti mismo
-        if (auth()->id() === $user->id) {
+        if (Auth::id() === $user->id) {
             return redirect()
                 ->route('admin.users.index')
                 ->with('status', 'No puedes eliminar tu propio usuario.');
