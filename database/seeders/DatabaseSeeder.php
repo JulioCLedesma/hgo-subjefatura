@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call(AdminUserSeeder::class);
         Shift::firstOrCreate(['code' => 'M'], ['name' => 'Matutino']);
         Shift::firstOrCreate(['code' => 'V'], ['name' => 'Vespertino']);
 
