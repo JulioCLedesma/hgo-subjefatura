@@ -316,7 +316,7 @@ class ReportController extends Controller
         ];
 
         $asistencia = collect($asistencia_keys)->mapWithKeys(function ($key) use ($rrhh) {
-            return [$key => $rrhh->sum($key)];
+            return [$key => round($rrhh->avg($key), 1)];
         });
 
         $incidencias = collect($incidencia_keys)->mapWithKeys(function ($key) use ($rrhh) {

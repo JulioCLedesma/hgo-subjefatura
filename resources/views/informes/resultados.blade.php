@@ -101,13 +101,13 @@
             {{-- Card asistencia --}}
             <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 flex flex-col gap-2">
                 <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                    Asistencia total (sin pasantes)
+                    Asistencia Promedio (diaria)
                 </p>
                 <p class="text-2xl font-bold text-gray-800">
-                    {{ $asistencia_total ?? 0 }}
+                    {{ $estadistica_rrhh['asistencia_media'] ?? 0 }}
                 </p>
                 <p class="text-[11px] text-gray-400">
-                    Personal adscrito que se presentó a laborar (subjefatura, supervisión, jefes, generales y auxiliares).
+                    Promedio de personal adscrito por turno (sin pasantes) en el periodo.
                 </p>
             </div>
 
@@ -513,7 +513,7 @@
                         Asistencia por categoría (sin pasantes)
                     </h2>
                     <p class="text-xs text-gray-500">
-                        Distribución del personal presente en el turno.
+                        Distribución del personal presente en el turno (promedio en periodos).
                     </p>
                 </div>
                 <div class="p-4 space-y-2 text-sm">
