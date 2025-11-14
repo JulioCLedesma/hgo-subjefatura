@@ -3,9 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DailyCaptureController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\Admin\UserController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 // TODO: si quieres que al iniciar sesión vaya directo a /captura,
@@ -61,3 +62,10 @@ Route::middleware([
     Route::post('/informes/pdf', [ReportController::class, 'pdf'])
         ->name('informes.pdf');
 });
+
+    Route::middleware(['auth', 'can:manage-users'])
+        ->prefix('admin')
+        ->name('admin.')
+        ->group(function () {
+            Route::resource('users', UserController::class)->except(['show']);
+        });

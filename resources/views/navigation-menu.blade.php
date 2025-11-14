@@ -22,6 +22,13 @@
                     <x-nav-link href="{{ route('informes.index') }}" :active="request()->routeIs('informes.*')">
                         Informes
                     </x-nav-link>
+
+                    @can('manage-users')
+                        <x-nav-link href="{{ route('admin.users.index') }}"
+                                    :active="request()->routeIs('admin.users.*')">
+                            Gestión de usuarios
+                        </x-nav-link>
+                    @endcan
                 </div>
             </div>
 
