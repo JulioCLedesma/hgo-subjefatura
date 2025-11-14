@@ -1,42 +1,97 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex items-center justify-between">
+    <div class="max-w-3xl mx-auto py-6">
+        <h1 class="text-2xl font-bold text-gray-800 mb-4">
+            Editar usuario
+        </h1>
+
+        <form action="{{ route('admin.users.update', $user) }}" method="POST" class="space-y-6">
+            @csrf
+            @method('PUT')
+
+            {{-- Nombre --}}
             <div>
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    Editar usuario
-                </h2>
-                <p class="text-xs text-gray-500">
-                    {{ $user->name }} · {{ $user->email }}
-                </p>
+                <x-input-label for="name" value="Nombre completo" />
+                <x-text-input
+                    id="name"
+                    name="name"
+                    type="text"
+                    class="mt-1 block w-full"
+                    value="{{ old('name', $user->name) }}"
+                    required
+                    autofocus
+                />
+                <x-input-error for="name" class="mt-1" />
             </div>
 
-            <a href="{{ route('admin.users.index') }}"
-               class="inline-flex items-center px-3 py-2 text-sm font-semibold rounded-lg
-                      border border-gray-200 text-gray-700 hover:bg-gray-50">
-                Volver al listado
-            </a>
-        </div>
-    </x-slot>
-
-    <div class="py-6">
-        <div class="max-w-3xl mx-auto">
-            <div class="bg-white shadow-sm rounded-2xl border border-gray-100 p-6">
-                <h3 class="font-semibold text-gray-800 text-lg mb-2">
-                    Actualizar datos del usuario
-                </h3>
-                <p class="text-xs text-gray-500 mb-4">
-                    Puedes actualizar nombre, correo, rol y contraseña (si es necesario).
-                </p>
-
-                <form method="POST" action="{{ route('admin.users.update', $user) }}" class="space-y-4">
-                    @method('PUT')
-
-                    @include('admin.users._form', [
-                        'user' => $user,
-                        'submitLabel' => 'Guardar cambios',
-                    ])
-                </form>
+            {{-- Correo electrónico --}}
+            <div>
+                <x-input-label for="email" value="Correo electrónico" />
+                <x-text-input
+                    id="email"
+                    name="email"
+                    type="email"
+                    class="mt-1 block w-full"
+                    value="{{ old('email', $user->email) }}"
+                    required
+                />
+                <x-input-error for="email" class="mt-1" />
             </div>
-        </div>
+
+            {{-- Contraseña (opcional) --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <x-input-label for="password" value="Nueva contraseña (opcional)" />
+                    <x-text-input
+                        id="password"
+                        name="password"
+                        type="password"
+                        class="mt-1 block w-full"
+                        autocomplete="new-password"
+                    />
+                    <p class="text-xs text-gray-500 mt-1">
+                        Deja en blanco si no deseas cambiarla.
+                    </p>
+                    <x-input-error for="password" class="mt-1" />
+                </div>
+
+                <div>
+                    <x-input-label for="password_confirmation" value="Confirmar nueva contraseña" />
+                    <x-text-input
+                        id="password_confirmation"
+                        name="password_confirmation"
+                        type="password"
+                        class="mt-1 block w-full"
+                        autocomplete="new-password"
+                    />
+                </div>
+            </div>
+
+            {{-- Es administrador --}}
+            <div>
+                <label class="inline-flex items-center gap-2">
+                    <input
+                        type="checkbox"
+                        name="is_admin"
+                        value="1"
+                        class="rounded border-gray-300 text-emerald-600 shadow-sm focus:ring-emerald-500"
+                        {{ old('is_admin', $user->is_admin) ? 'checked' : '' }}
+                    >
+                    <span class="text-sm text-gray-700">
+                        Usuario administrador
+                    </span>
+                </label>
+            </div>
+
+            <div class="flex justify-end gap-2">
+                <a href="{{ route('admin.users.index') }}"
+                   class="text-sm text-gray-600 hover:text-gray-800">
+                    Cancelar
+                </a>
+
+                <x-primary-button>
+                    Guardar cambios
+                </x-primary-button>
+            </div>
+        </form>
     </div>
 </x-app-layout>
